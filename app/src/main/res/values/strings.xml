@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Cheat Chat</string>
+    <string name="enter_email">Enter Email</string>
+    <string name="username">UserName</string>
+    <string name="enter_password">Enter Password</string>
+    <string name="register">Register</string>
+    <string name="sign_in">Sign In</string>
+    <string name="choose_image">Choose Image</string>
+</resources>

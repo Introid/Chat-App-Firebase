@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="#FF5252"
+    android:padding="10dp"
+    android:layout_height="match_parent"
+    tools:context=".LoginActivity">
+
+
+    <EditText
+        android:id="@+id/et_email_login"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="150dp"
+        android:background="@drawable/rounded_corner_text"
+        android:hint="@string/enter_email"
+        android:ems="10"
+        android:paddingStart="10dp"
+        android:inputType="textEmailAddress"
+        tools:ignore="RtlSymmetry" />
+
+    <EditText
+        android:id="@+id/et_password_login"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="5dp"
+        android:hint="@string/enter_password"
+        android:paddingStart="10dp"
+        android:layout_below="@+id/et_email_login"
+        android:background="@drawable/rounded_corner_text"
+        android:ems="10"
+        android:inputType="textPassword"
+        tools:ignore="RtlHardcoded,RtlSymmetry" />
+
+    <Button
+        android:id="@+id/btn_SignIn"
+        android:layout_marginTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_below="@+id/et_password_login"
+        android:background="@drawable/rounded_corner_button"
+        android:textStyle="bold"
+        android:textColor="#fff"
+        android:layout_centerHorizontal="true"
+        android:text="@string/sign_in" />
+</RelativeLayout>

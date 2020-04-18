@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "497269042657",
+    "firebase_url": "https://cheat-chat-8e62f.firebaseio.com",
+    "project_id": "cheat-chat-8e62f",
+    "storage_bucket": "cheat-chat-8e62f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:497269042657:android:9724545d576cec8d61b6a0",
+        "android_client_info": {
+          "package_name": "com.introid.cheatchat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "497269042657-qkopcj3hevbcsgestb75ucu1dmh4fhl9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.introid.cheatchat",
+            "certificate_hash": "b75bad7f89e0f9d5bb72bf75d76503eed73cb813"
+          }
+        },
+        {
+          "client_id": "497269042657-iap7e90tvs3nv1scj656rf1vl4b56anm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBPO7viNNbUhhoULVXAwpmhsOfNQbsGLP0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "497269042657-iap7e90tvs3nv1scj656rf1vl4b56anm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
