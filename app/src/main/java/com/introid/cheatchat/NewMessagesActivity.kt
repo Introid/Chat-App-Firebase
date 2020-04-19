@@ -1,5 +1,6 @@
 package com.introid.cheatchat
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.RecyclerView
@@ -42,6 +43,13 @@ class NewMessagesActivity : AppCompatActivity() {
               val user = it.getValue(User::class.java)
                 if (user != null) {
                     adapter.add(UserItem(user))
+                }
+                adapter.setOnItemClickListener { item, view ->
+                    val userItem= item as UserItem
+                    val intent = Intent(view.context,ChatLogActivity::class.java)
+                    intent.putExtra("user",userItem.user)
+                    startActivity(intent)
+                    finish()
                 }
             }
                 rv_newMessage.adapter= adapter

@@ -6,4 +6,7 @@
     <string name="register">Register</string>
     <string name="sign_in">Sign In</string>
     <string name="choose_image">Choose Image</string>
+    <string name="send">Send</string>
+    <string name="enter_message">Enter Message</string>
+    <string name="this_is_something_of_a_dummy_test">This is something of a dummy test This is something of a dummy test This is something of a dummy test</string>
 </resources>

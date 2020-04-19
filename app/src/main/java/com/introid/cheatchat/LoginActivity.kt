@@ -1,5 +1,6 @@
 package com.introid.cheatchat
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
@@ -25,6 +26,10 @@ class LoginActivity : AppCompatActivity() {
             .addOnCompleteListener{
                 if (!it.isSuccessful) return@addOnCompleteListener
                 Toast.makeText(this,"Sign In SuccessFul ${it.result!!.user!!.uid}",Toast.LENGTH_SHORT).show()
+                val intent= Intent(this,MessegesActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
+                startActivity(intent)
+
             }
             .addOnFailureListener{
                 Toast.makeText(this,"Failed to Sign In  ${it.message}",Toast.LENGTH_SHORT).show()
