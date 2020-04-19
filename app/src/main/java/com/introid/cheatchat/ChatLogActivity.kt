@@ -30,7 +30,6 @@ class ChatLogActivity : AppCompatActivity() {
 
         supportActionBar?.title= toUser.username
 
-
         listenForMessages()
         btn_send_message.setOnClickListener {
             performSendMessage()
@@ -39,7 +38,9 @@ class ChatLogActivity : AppCompatActivity() {
     }
 
     private fun listenForMessages() {
-        val ref = FirebaseDatabase.getInstance().getReference("/messages")
+        val fromId= FirebaseAuth.getInstance().uid
+        val toId= toUser?.uid
+        val ref = FirebaseDatabase.getInstance().getReference("/user-messeges/$fromId/$toId")
         ref.addChildEventListener(object : ChildEventListener{
             override fun onCancelled(p0: DatabaseError) {
 
@@ -64,12 +65,9 @@ class ChatLogActivity : AppCompatActivity() {
                         adapter.add(ChatToItem(chatMessage.text,toUser!!))
                     }
                 }
-
             }
-
             override fun onChildRemoved(p0: DataSnapshot) {
             }
-
         })
     }
 
@@ -81,12 +79,24 @@ class ChatLogActivity : AppCompatActivity() {
         if (fromId == null)return
 
         val text = et_new_message.text.toString()
-        val reference= FirebaseDatabase.getInstance().getReference("/messages").push()
+
+        val reference= FirebaseDatabase.getInstance().getReference("/user-messeges/$fromId/$toId").push()
+
+        val toReference= FirebaseDatabase.getInstance().getReference("/user-messeges/$toId/$fromId").push()
+
         val chatMessage = ChatMessage(reference.key!!,text,fromId,toId,System.currentTimeMillis()/1000)
         reference.setValue(chatMessage)
             .addOnSuccessListener {
-
+                et_new_message.text.clear()
+                rv_chat_log.scrollToPosition(adapter.itemCount-1)
             }
+        toReference.setValue(chatMessage)
+
+        val latestMessageRef = FirebaseDatabase.getInstance().getReference("latest-messages/$fromId/$toId")
+        latestMessageRef.setValue(chatMessage)
+
+        val latestMessagetoRef = FirebaseDatabase.getInstance().getReference("latest-messages/$toId/$fromId")
+        latestMessagetoRef.setValue(chatMessage)
     }
 
     private fun dummyData() {

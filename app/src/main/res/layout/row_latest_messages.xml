@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:layout_margin="5dp"
+    >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp">
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/item_image_row_latest_message"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginStart="10dp"
+            />
+        <TextView
+            android:id="@+id/item_username_row_latest_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/item_image_row_latest_message"
+            android:text="@string/username"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/item_image_row_latest_message"
+            android:layout_below="@+id/item_username_row_latest_message"
+            android:text="@string/this_is_latest_message"
+            android:textSize="20sp"
+            android:textStyle="normal"
+            android:layout_marginStart="20dp"
+            />
+
+
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

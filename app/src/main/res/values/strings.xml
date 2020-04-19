@@ -9,4 +9,6 @@
     <string name="send">Send</string>
     <string name="enter_message">Enter Message</string>
     <string name="this_is_something_of_a_dummy_test">This is something of a dummy test This is something of a dummy test This is something of a dummy test</string>
+    <string name="username">UserName</string>
+    <string name="this_is_latest_message">This is latest message</string>
 </resources>
