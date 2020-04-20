@@ -4,7 +4,6 @@
     android:layout_height="100dp"
     android:layout_margin="5dp"
     >
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="100dp">
@@ -27,6 +26,7 @@
             android:textStyle="bold"
             />
         <TextView
+            android:id="@+id/item_latest_message_row"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toEndOf="@id/item_image_row_latest_message"
@@ -36,7 +36,5 @@
             android:textStyle="normal"
             android:layout_marginStart="20dp"
             />
-
-
     </RelativeLayout>
 </androidx.cardview.widget.CardView>

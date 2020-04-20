@@ -12,6 +12,7 @@ import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import com.xwray.groupie.Item
 import kotlinx.android.synthetic.main.activity_messeges.*
+import kotlinx.android.synthetic.main.row_latest_messages.view.*
 
 class MessegesActivity : AppCompatActivity() {
     companion object{
@@ -30,6 +31,14 @@ class MessegesActivity : AppCompatActivity() {
         listenForLatestMessages()
 
     }
+    val latestMessagesMap= HashMap<String,ChatMessage>()
+    private fun refreshRecyclerViewMessages(){
+        adapter.clear()
+        latestMessagesMap.values.forEach{
+            adapter.add(LatestMessageRow(it))
+        }
+
+    }
 
     private fun listenForLatestMessages() {
         val fromId= FirebaseAuth.getInstance().uid
@@ -45,11 +54,15 @@ class MessegesActivity : AppCompatActivity() {
 
             }
             override fun onChildChanged(p0: DataSnapshot, p1: String?) {
-
+                val chatMessage= p0.getValue(ChatMessage::class.java)?:return
+                latestMessagesMap[p0.key!!]= chatMessage
+                refreshRecyclerViewMessages()
             }
             override fun onChildAdded(p0: DataSnapshot, p1: String?) {
-                val chatMessage= p0.getValue(ChatMessage::class.java)
-                adapter.add(LatestMessageRow())
+                val chatMessage= p0.getValue(ChatMessage::class.java)?:return
+                latestMessagesMap[p0.key!!]= chatMessage
+                refreshRecyclerViewMessages()
+
             }
 
 
@@ -60,12 +73,13 @@ class MessegesActivity : AppCompatActivity() {
 
     val adapter= GroupAdapter<GroupieViewHolder>()
 
-    class LatestMessageRow: Item<GroupieViewHolder>(){
+    class LatestMessageRow(val chatMessage : ChatMessage): Item<GroupieViewHolder>(){
         override fun getLayout(): Int {
             return R.layout.row_latest_messages
         }
 
         override fun bind(viewHolder: GroupieViewHolder, position: Int) {
+            viewHolder.itemView.item_latest_message_row.text= chatMessage.text
 
         }
 
