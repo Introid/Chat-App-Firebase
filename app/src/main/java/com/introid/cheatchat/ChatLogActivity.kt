@@ -18,7 +18,7 @@ import kotlinx.android.synthetic.main.chat_to_row.view.*
 
 class ChatLogActivity : AppCompatActivity() {
     val adapter = GroupAdapter<GroupieViewHolder>()
-    val toUser : User?= null
+    var toUser : User?= null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,9 +26,9 @@ class ChatLogActivity : AppCompatActivity() {
 
         rv_chat_log.adapter= adapter
 
-        val toUser= intent.getParcelableExtra<User>("user")
+        toUser= intent.getParcelableExtra<User>(NewMessagesActivity.USER_KEY)
 
-        supportActionBar?.title= toUser.username
+        supportActionBar?.title= toUser?.username
 
         listenForMessages()
         btn_send_message.setOnClickListener {
@@ -40,7 +40,7 @@ class ChatLogActivity : AppCompatActivity() {
     private fun listenForMessages() {
         val fromId= FirebaseAuth.getInstance().uid
         val toId= toUser?.uid
-        val ref = FirebaseDatabase.getInstance().getReference("/user-messeges/$fromId/$toId")
+        val ref = FirebaseDatabase.getInstance().getReference("/user-messages/$fromId/$toId")
         ref.addChildEventListener(object : ChildEventListener{
             override fun onCancelled(p0: DatabaseError) {
 
@@ -65,28 +65,34 @@ class ChatLogActivity : AppCompatActivity() {
                         adapter.add(ChatToItem(chatMessage.text,toUser!!))
                     }
                 }
+                rv_chat_log.scrollToPosition(adapter.itemCount-1)
             }
             override fun onChildRemoved(p0: DataSnapshot) {
             }
         })
     }
 
+    companion object {
+        val USER_KEY = "USER_KEY"
+    }
     private fun performSendMessage() {
 
         val fromId= FirebaseAuth.getInstance().uid
-        val user= intent.getParcelableExtra<User>("user")
+        val user= intent.getParcelableExtra<User>(NewMessagesActivity.USER_KEY)
         val toId= user.uid
+        val text = et_new_message.text.toString()
         if (fromId == null)return
 
-        val text = et_new_message.text.toString()
 
-        val reference= FirebaseDatabase.getInstance().getReference("/user-messeges/$fromId/$toId").push()
 
-        val toReference= FirebaseDatabase.getInstance().getReference("/user-messeges/$toId/$fromId").push()
+        val reference= FirebaseDatabase.getInstance().getReference("/user-messages/$fromId/$toId").push()
+
+        val toReference= FirebaseDatabase.getInstance().getReference("/user-messages/$toId/$fromId").push()
 
         val chatMessage = ChatMessage(reference.key!!,text,fromId,toId,System.currentTimeMillis()/1000)
         reference.setValue(chatMessage)
             .addOnSuccessListener {
+
                 et_new_message.text.clear()
                 rv_chat_log.scrollToPosition(adapter.itemCount-1)
             }
@@ -99,12 +105,6 @@ class ChatLogActivity : AppCompatActivity() {
         latestMessagetoRef.setValue(chatMessage)
     }
 
-    private fun dummyData() {
-        val adapter = GroupAdapter<GroupieViewHolder>()
-
-        rv_chat_log.adapter= adapter
-
-    }
 }
 class ChatFromItem(val text : String ,val user: User) : Item<GroupieViewHolder>(){
     override fun getLayout(): Int {

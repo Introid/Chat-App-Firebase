@@ -8,30 +8,30 @@
     android:padding="10dp"
     tools:context=".RegisterActivity">
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/profile_image_circular"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_register"
         android:layout_width="150dp"
         android:layout_height="150dp"
+        app:cardCornerRadius="100dp"
         android:layout_marginTop="30dp"
         android:layout_marginStart="110dp"
-        />
+       >
+        <ImageView
+            android:id="@+id/profile_image_circular"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:src="@drawable/ic_account_circle_black_24dp"
+            android:scaleType="fitCenter"
+            />
 
-    <Button
-        android:id="@+id/btn_choose_image"
-        android:layout_width="150dp"
-        android:layout_marginTop="30dp"
-        android:textColor="#fff"
-        android:background="@drawable/rounded_choose_image"
-        android:text="@string/choose_image"
-        android:layout_marginStart="110dp"
-        android:layout_height="150dp"/>
+    </androidx.cardview.widget.CardView>
 
     <EditText
         android:id="@+id/et_username"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@drawable/rounded_corner_text"
-        android:layout_below="@+id/btn_choose_image"
+        android:layout_below="@+id/card_register"
         android:layout_marginTop="20dp"
         android:hint="@string/username"
         android:paddingStart="10dp"

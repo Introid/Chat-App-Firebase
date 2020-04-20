@@ -5,9 +5,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.recyclerview.widget.DividerItemDecoration
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.introid.cheatchat.models.ChatMessage
+import com.squareup.picasso.Picasso
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import com.xwray.groupie.Item
@@ -18,17 +20,24 @@ class MessegesActivity : AppCompatActivity() {
     companion object{
         var currentUser: User?= null
     }
+    val adapter= GroupAdapter<GroupieViewHolder>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_messeges)
 
         rv_latest_messages.adapter= adapter
-
-
-
-        checkVerification()
+        rv_latest_messages.addItemDecoration(DividerItemDecoration(this,DividerItemDecoration.VERTICAL))
+        adapter.setOnItemClickListener { item, view ->
+            val intent= Intent(this, ChatLogActivity::class.java)
+            val row = item as LatestMessageRow
+            intent.putExtra(NewMessagesActivity.USER_KEY,row.chatPartnerUser)
+            startActivity(intent)
+        }
         listenForLatestMessages()
+        fetchCurrentUser()
+        checkVerification()
+
 
     }
     val latestMessagesMap= HashMap<String,ChatMessage>()
@@ -69,17 +78,37 @@ class MessegesActivity : AppCompatActivity() {
 
         })
     }
-    // we left at 29:27
 
-    val adapter= GroupAdapter<GroupieViewHolder>()
+
 
     class LatestMessageRow(val chatMessage : ChatMessage): Item<GroupieViewHolder>(){
+        var chatPartnerUser : User?= null
         override fun getLayout(): Int {
             return R.layout.row_latest_messages
         }
 
         override fun bind(viewHolder: GroupieViewHolder, position: Int) {
             viewHolder.itemView.item_latest_message_row.text= chatMessage.text
+
+            val chatPartnerId: String
+            if (chatMessage.fromId == FirebaseAuth.getInstance().uid){
+                chatPartnerId= chatMessage.toId
+            }else {
+                chatPartnerId= chatMessage.fromId
+            }
+            val ref= FirebaseDatabase.getInstance().getReference("/users/$chatPartnerId")
+                ref.addListenerForSingleValueEvent(object : ValueEventListener{
+                    override fun onCancelled(p0: DatabaseError) {
+
+                    }
+
+                    override fun onDataChange(p0: DataSnapshot) {
+                        chatPartnerUser =p0.getValue(User::class.java)
+                     viewHolder.itemView.item_username_row_latest_message.text=chatPartnerUser?.username
+                     Picasso.get().load(chatPartnerUser?.profilePictureUrl).into(viewHolder.itemView.item_image_row_latest_message)
+                    }
+
+                })
 
         }
 

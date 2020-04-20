@@ -32,7 +32,7 @@ class RegisterActivity : AppCompatActivity() {
             val intent= Intent(this,LoginActivity::class.java)
             startActivity(intent)
         }
-        btn_choose_image.setOnClickListener {
+        profile_image_circular.setOnClickListener {
             val intent= Intent(Intent.ACTION_PICK)
             intent.type= "image/*"
             startActivityForResult(intent,0)
@@ -47,7 +47,7 @@ class RegisterActivity : AppCompatActivity() {
            selectedPhotoUri= data.data
 
             profile_image_circular.setImageURI(selectedPhotoUri)
-            profile_image_circular.alpha= 0f
+
             Log.d("Main", "Image set successful")
 
 //            val bitmap= MediaStore.Images.Media.getBitmap(contentResolver,selectedPhotoUri)

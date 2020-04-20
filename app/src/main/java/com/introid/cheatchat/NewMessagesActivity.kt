@@ -29,6 +29,9 @@ class NewMessagesActivity : AppCompatActivity() {
 //        rv_newMessage.adapter= adapter
         fetchUser()
     }
+    companion object {
+        val USER_KEY = "USER_KEY"
+    }
 
     private fun fetchUser() {
        val ref= FirebaseDatabase.getInstance().getReference("/users")
@@ -39,19 +42,20 @@ class NewMessagesActivity : AppCompatActivity() {
 
             override fun onDataChange(p0: DataSnapshot) {
             val adapter= GroupAdapter<GroupieViewHolder>()
-            p0.children.forEach{
-              val user = it.getValue(User::class.java)
+            p0.children.forEach {
+                val user = it.getValue(User::class.java)
                 if (user != null) {
                     adapter.add(UserItem(user))
                 }
+            }
                 adapter.setOnItemClickListener { item, view ->
                     val userItem= item as UserItem
                     val intent = Intent(view.context,ChatLogActivity::class.java)
-                    intent.putExtra("user",userItem.user)
+                    intent.putExtra(USER_KEY,userItem.user)
                     startActivity(intent)
                     finish()
                 }
-            }
+
                 rv_newMessage.adapter= adapter
             }
 
