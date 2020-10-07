@@ -2,6 +2,7 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+
     android:layout_height="wrap_content">
 
     <de.hdodenhof.circleimageview.CircleImageView
@@ -19,7 +20,7 @@
         android:padding="10dp"
         android:layout_toEndOf="@+id/user_from_profile_image"
         android:layout_marginStart="5dp"
-        android:background="@drawable/rounded_corner_text"
+        android:background="@drawable/rounded_corner_text_message"
         android:text="@string/this_is_something_of_a_dummy_test"
         android:textSize="16sp"
         android:textStyle="normal"
